@@ -78,8 +78,9 @@ See the above repository for updates as well as full license text. */
   opacity: 1 !important;
 }
 
+/* Makes the bookmarksbar visible in fullscreen */
 #navigator-toolbox[inFullscreen] > #PersonalToolbar,
-#PersonalToolbar[collapsed="true"]{ display: none }
+#PersonalToolbar[collapsed="true"]{ visibility: unset !important; }
 
 /* Uncomment this if tabs toolbar is hidden with hide_tabs_toolbar.css */
  /*#titlebar{ margin-bottom: -9px }*/
