@@ -3,11 +3,11 @@ See the above repository for updates as well as full license text. */
 
 /* Make menubar permanently enabled or this isn't going to work */
 
-#navigator-toolbox{ --uc-menubar-height: 36px }
+#navigator-toolbox{ --uc-menubar-height: 34px; }
 :root[uidensity="compact"] #navigator-toolbox{ --uc-menubar-height: 30px }
 
 #titlebar{ -moz-box-direction: reverse; -moz-appearance: none !important; }
-@media (-moz-os-version: windows-win10){
+@media (-moz-os-version: windows-win7),(-moz-os-version: windows-win10){
   :root[sizemode="maximized"][tabsintitlebar] #TabsToolbar{ margin-top: 8px !important; }
 }
 #toolbar-menubar{
@@ -18,7 +18,11 @@ See the above repository for updates as well as full license text. */
   pointer-events: none;
 }
 
-#menubar-items{ -moz-box-pack: center; pointer-events: initial }
+#menubar-items{
+  -moz-box-pack: center;
+  pointer-events: initial;
+  margin-top: 3px;
+}
 /* Adjust to fit menubar items - 300px works for English locale */
 #nav-bar{ padding-left: 300px; }
 
