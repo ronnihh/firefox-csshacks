@@ -1,40 +1,40 @@
 /* Source file https://github.com/MrOtherGuy/firefox-csshacks/tree/master/chrome/non_floating_sharp_tabs.css made available under Mozilla Public License v. 2.0
 See the above repository for updates as well as full license text. */
 
-/* This style makes tabs and related items non-rounded and connects tabs to toolbars like in previous Firefox versions. */
+/* This style makes tabs and related items non-rounded and connects tabs to toolbars like in previous Firefox versions.
+ * You should set layout.css.color-mix.enabled to true in about:config to make colors apply properly.
+ * It's not strictly a requirement, but this style expects compact_proton.css to be loaded before it. */
 
-/* It's not strictly a requirement, but this style expects  compact_proton.css to be loaded before it. */
-
-/* NOTE: go to about:config and enable layout.css.color-mix.enabled, this doesn't work properly without it. */
-
-:root{
-  --proton-tab-block-margin: 0px !important;
+:root[id]{
   --tab-block-margin: 0px !important;
   --tabs-shadow-size: 1px !important;
   
   /* Remove next line if you want selected tab to have color other than toolbar background - then it follows your theme color  */
   --lwt-selected-tab-background-color: var(--toolbar-bgcolor) !important; 
-  
-  /* Uncomment next line to force specific color for tab top line */
-  /* --tab-line-color: blue !important; */ 
 }
 
-/* This sets a color for border around tabs and between tabs & navigation toolbars. Set to transparent to remove the border.*/
-#navigator-toolbox{
-  --tabs-border-color: color-mix(in srgb, currentcolor 30%, transparent) !important;
-}
+/* Uncomment next line to force specific color for tab top line */
+/* #tabbrowser-tabs{ --lwt-tab-line-color: blue !important; } */
 
-/* This overrides value in compact_proton.css */
-#nav-bar{ 
-  box-shadow: 0 -1px 0 0 var(--tabs-border-color) !important;
+/* These next two rules set a color for border around tabs and between tabs & navigation toolbars. Set to transparent to remove the border.*/
+#nav-bar{
+  /* This overrides value in compact_proton.css */
+  box-shadow: 0 -1px 0 0 color-mix(in srgb, currentcolor 30%, transparent) !important;
+}
+.tab-background[selected]{
+  border-inline: 1px solid color-mix(in srgb, currentcolor 30%, transparent) !important;
+  border-bottom-color: transparent !important;
 }
 
 #TabsToolbar{
   --toolbarbutton-inner-padding: 7px !important;
 }
-#navigator-toolbox:not([movingtab]) > #titlebar > #TabsToolbar{
+/* Few exceptions for default light theme */
+#navigator-toolbox:not([movingtab]):-moz-lwtheme > #titlebar > #TabsToolbar{
   --toolbar-bgcolor: transparent;
 }
+
+.tab-background[selected]:not(:-moz-lwtheme){ background: var(--toolbar-bgcolor) !important; }
 
 #TabsToolbar .toolbarbutton-1 > .toolbarbutton-badge-stack,
 #TabsToolbar .toolbarbutton-1 > .toolbarbutton-icon{ border-radius: 2px !important;  }
@@ -64,9 +64,12 @@ See the above repository for updates as well as full license text. */
 .tab-background{
   border-radius: 0 !important;
   box-shadow: none !important;
+  border-top: 0 !important;
 }
-.tab-background[selected]{
-  border-inline: 1px solid var(--tabs-border-color) !important;
+
+.tab-background:not([selected])[multiselected]{
+  background: color-mix(in srgb, currentColor 11%, transparent) !important;
+  margin-inline-start: -1px; 
 }
 
 /* Line to mark selected tab */
@@ -81,7 +84,7 @@ See the above repository for updates as well as full license text. */
 }
 .tab-stack > .tab-background[selected]::before{
   background-color: highlight;
-  background-image: linear-gradient(var(--tab-line-color),var(--tab-line-color));
+  background-image: linear-gradient(var(--lwt-tab-line-color),var(--lwt-tab-line-color));
 }
 /* Photon-like tab on hover animation for the top line */
 @keyframes tab-onhover-line-anim{ from{ margin-inline: 20px } to { margin-inline: 0 } }
