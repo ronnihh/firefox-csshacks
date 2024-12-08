@@ -7,37 +7,44 @@ See the above repository for updates as well as full license text. */
  * Does NOT support toolbar buttons/items in menubar when in disabled mode.
  */
 
-/* Dummy variable to support versions 94-96, can be removed when 96 lands */
-:root{ --lwt-frame: var(--lwt-accent-color) }
-
 #toolbar-menubar{
   --uc-menubaritem-height: 28px;
   --uc-menubaritem-width: 40px;
 }
 
-menubar > menu{visibility: collapse; transition: visibility 0ms linear 0.1s}
-menubar:hover > menu,    
-#toolbar-menubar[autohide="true"]:not([inactive]) > #menubar-items > menubar > menu{visibility: visible}
+#main-menubar > menu{visibility: collapse; transition: visibility 0ms linear 0.1s}
+#main-menubar:hover > menu,    
+#toolbar-menubar[autohide="true"]:not([inactive]) > #menubar-items > #main-menubar > menu{visibility: visible}
 
-#menubar-items{
+:root:not([customizing],[sizemode="fullscreen"]) #menubar-items{
   display: block;
   position: fixed;
   z-index: 10;
-  background-color: var(--lwt-frame);
+  background-color: light-dark(rgb(235, 235, 239), rgb(31, 30, 37));
   inset-inline-start: 0;
 }
-menubar{ -moz-box-orient: vertical; }
-menubar > menu { padding: 3px }
+:root[lwtheme]:not([customizing]) #menubar-items{
+  background-color: var(--lwt-accent-color);
+}
+:root:not([customizing]) #main-menubar{
+  flex-direction: column;
+}
+#main-menubar > menu { padding: 3px }
+#main-menubar > menu > menupopup{
+  margin: calc(0px - var(--uc-menubaritem-height)) 0 0 var(--uc-menubaritem-width);
+}
+#toolbar-menubar[autohide="true"][inactive] > #menubar-items{
+  max-height: 0px;
+  overflow: hidden;
+}
+#toolbar-menubar[autohide="true"]:not([inactive]){
+  margin-bottom: calc(0px - var(--tab-min-height) + var(--tabs-navbar-shadow-size));
+}
+#toolbar-menubar > .titlebar-buttonbox-container + :is(toolbarbutton,toolbaritem){
+  margin-inline-start: var(--uc-menubaritem-width);
+}
 
-menubar > menu > menupopup{ margin: calc(0px - var(--uc-menubaritem-height)) 0 0 var(--uc-menubaritem-width) }
-#toolbar-menubar[autohide="true"][inactive] > #menubar-items{ max-height: 0px; overflow: -moz-hidden-unscrollable }
-
-
-#toolbar-menubar[autohide="true"]:not([inactive]){ margin-bottom: -32px }
-
-#toolbar-menubar > .titlebar-buttonbox-container + :is(toolbarbutton,toolbaritem){ margin-inline-start: var(--uc-menubaritem-width) }
-
-#file-menu{
+:root:not([sizemode="fullscreen"]) #file-menu{
   fill: currentColor;
   visibility: visible;
   height: var(--uc-menubaritem-height);
@@ -47,8 +54,14 @@ menubar > menu > menupopup{ margin: calc(0px - var(--uc-menubaritem-height)) 0 0
   background-repeat: no-repeat;
   background-position: center;
 }
-menubar:not(:hover) > #file-menu{ background-image: url("chrome://devtools/skin/images/tool-storage.svg"); }
+
+#main-menubar:not(:hover) > #file-menu{ background-image: url("chrome://devtools/skin/images/tool-storage.svg"); }
 
 #file-menu > .menubar-text{ visibility: collapse }
-menubar:hover > #file-menu > .menubar-text{ visibility: visible }
+#main-menubar:hover > #file-menu > .menubar-text{ visibility: visible }
 
+.browser-titlebar,
+#titlebar{
+  opacity: 1 !important;
+  will-change: unset !important;
+}
