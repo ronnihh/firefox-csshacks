@@ -11,7 +11,7 @@ See the above repository for updates as well as full license text. */
 }
 
 :root[sizemode="maximized"]{
-  --uc-toolbox-rotation: 88.5deg;
+  --uc-toolbox-rotation: 80deg; /* Don't have to be so precise to find the zone to show toolbox */
 }
 
 @media  (-moz-platform: windows){
